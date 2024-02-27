@@ -1,19 +1,20 @@
 import express from 'express'
-import {mongoDBURL, PORT} from './config.js'
+import {dbUrl, PORT} from './config.js'
 import mongoose from 'mongoose'
 import usersRoute from './routes/usersRoute.js'
+import cors from 'cors'
 
 const app = express()
 
 app.use(express.json())
+
+app.use(cors({origin: true}))
+
+
 app.use('/users', usersRoute)
 
-app.get('/', (request, response) => {
-    return response.status(234).send('nigga')
-})
-
 mongoose
-    .connect(mongoDBURL)
+    .connect(dbUrl)
     .then(() => {
         console.log('database ok')
         app.listen(PORT, () => {

@@ -1,110 +1,138 @@
-import express from 'express';
-import {User} from '../models/userModel.js';
+import express from "express";
+import { User } from "../models/userModel.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/', async (request, response) => {
-    try {
+router.get("/", async (request, response) => {
+  try {
+    const users = await User.find({});
 
-        const users = await User.find({})
+    return response.status(200).json({
+      data: users,
+    });
+  } catch (error) {
+    console.log(error);
+    return response.status(500).send({ message: error.message });
+  }
+});
 
-        return response.status(200).json({
-            count: users.length,
-            data: users
-        })
-
-    } catch (error) {
-        console.log(error)
-        return response.status(500).send({message: error.message})
+//CREATE ACCOUNT
+router.post("/", async (request, response) => {
+  try {
+    if (
+      !request.body.username ||
+      !request.body.fullName ||
+      !request.body.password
+    ) {
+      return response.status(400).send({ message: "Send all required data" });
     }
-})
 
-router.post('/', async (request, response) => {
-    try {
+    const newUser = {
+      username: request.body.username,
+      fullName: request.body.fullName,
+      password: request.body.password,
+      posts: request.body.posts,
+      followers: request.body.followers,
+      following: request.body.following,
+    };
 
-        if (
-            !request.body.username ||
-            !request.body.firstName ||
-            !request.body.lastName
-        ) {
-            return response.status(400).send({message: 'Send all required data'})
-        }
+    const user = await User.create(newUser);
 
-        const newUser = {
-            username: request.body.username,
-            firstName: request.body.firstName,
-            lastName: request.body.lastName,
-        }
+    return response.status(201).send(user);
+  } catch (error) {
+    console.log(error.message);
+    response.status(500).send({ message: error.message });
+  }
+});
 
-        const user = await User.create(newUser)
+//RETURN ACCOUNT
+router.get("/:username", async (request, response) => {
+  try {
+    const { username } = request.params;
 
-        return response.status(201).send(user)
+    const user = await User.findOne({ username: username });
+
+    if (!user) {
+      return response.status(404).send({ message: "User not found" });
     }
-    catch (error) {
-        console.log(error.message)
-        response.status(500).send({ message: error.message })
+
+    return response.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+    return response.status(500).send({ message: error.message });
+  }
+});
+
+//EDIT ACCOUNT
+// router.put('/:username', async (request, response) => {
+//     try {
+//
+//         if (
+//             !request.body.username ||
+//             !request.body.fullName
+//         ) {
+//             return response.status(400).send({message: 'Send all required data'})
+//         }
+//
+//         const { username } = request.params
+//
+//         const result = await User.findOneAndUpdate({ 'username' : username }, request.body)
+//
+//         if (!result) {
+//             return response.status((404)).send({message: "User not found"})
+//         }
+//
+//         return response.status(200).send({message: 'User edited successfully'})
+//
+//     } catch (error) {
+//         console.log(error)
+//         return response.status(500).send({message: error.message})
+//     }
+// })
+
+//DELETE ACCOUNT
+router.delete("/:username", async (request, response) => {
+  try {
+    const { username } = request.params;
+
+    const result = await User.findOneAndDelete({ username: username });
+
+    if (!result) {
+      return response.status(404).send({ message: "User not found" });
     }
-})
 
-router.get('/:id', async (request, response) => {
-    try {
+    return response.status(200).send({ message: "User deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    return response.status(500).send({ message: error.message });
+  }
+});
 
-        const { id } = request.params
+//FOLLOW ACCOUNT
+router.put("/follow/:username", async (request, response) => {
+  try {
+    const account = request.params.username;
+    const currentUser = request.body._currentUser.username;
 
-        const user = await User.findById(id)
+    const result = await Promise.all([
+      User.findOneAndUpdate({ username: account }, request.body._userData),
+      User.findOneAndUpdate(
+        { username: currentUser },
+        request.body._currentUser,
+      ),
+    ]);
 
-        return response.status(200).json(user)
-
-    } catch (error) {
-        console.log(error)
-        return response.status(500).send({message: error.message})
+    if (!result) {
+      return response.status(404).json({ message: "Users not found" });
     }
-})
 
-router.put('/:id', async (request, response) => {
-    try {
+    return response.status(200).send({
+      message: `User followed successfully`,
+    });
+  } catch (error) {
+    console.log(error);
+    return response.status(500).send({ message: error.message });
+  }
+});
 
-        if (
-            !request.body.username ||
-            !request.body.firstName ||
-            !request.body.lastName
-        ) {
-            return response.status(400).send({message: 'Send all required data'})
-        }
-
-        const { id } = request.params
-
-        const result = await User.findByIdAndUpdate(id, request.body)
-
-        if (!result) {
-            return response.status((404)).send({message: "User not found"})
-        }
-
-        return response.status(200).send({message: 'User edited successfully'})
-
-    } catch (error) {
-        console.log(error)
-        return response.status(500).send({message: error.message})
-    }
-})
-
-router.delete('/:id', async (request, response) => {
-    try {
-
-        const { id } = request.params
-
-        const result = await User.findByIdAndDelete(id)
-
-        if (!result) {
-            return response.status((404)).send({message: "User not found"})
-        }
-
-        return response.status(200).send({message: 'User deleted successfully'})
-
-    } catch (error) {
-        console.log(error)
-        return response.status(500).send({message: error.message})
-    }
-})
-
-export default router
+export default router;

@@ -6,14 +6,26 @@ const userSchema = new Schema (
             type: String,
             required: true,
         },
-        firstName: {
+        password: {
             type: String,
             required: true,
         },
-        lastName: {
+        fullName: {
             type: String,
             required: true,
         },
+        posts: {
+            type: Array,
+            required: false,
+        },
+        followers: {
+            type: Array,
+            required: false,
+        },
+        following: {
+            type: Array,
+            required: false,
+        }
     },
     {
         timestamps: true,
