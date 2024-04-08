@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { IoIosMenu } from "react-icons/io";
 import MobileNav from "./MobileNav.jsx";
+import { Link, useRouteLoaderData } from "react-router-dom";
 
 const MyAccount = () => {
   const [currentUser, setCurrentUser] = useState({});
+
+  function logOut() {
+    localStorage.setItem("currentUser", JSON.stringify({}));
+    window.location.pathname = "/login";
+  }
 
   useEffect(() => {
     setCurrentUser(JSON.parse(localStorage.getItem("currentUser")) || {});
@@ -14,12 +20,12 @@ const MyAccount = () => {
       <div className="font-light">
         {/*HEADER*/}
         <div className="w-full h-auto flex justify-between align-middle">
-          <div className="text-lg font-semibold">
+          <div className="text-xl font-semibold">
             {currentUser?.username || ""}
           </div>
-          <IoIosMenu size={28} />
+          <IoIosMenu onClick={logOut} size={28} />
         </div>
-        <div className="flex py-4">
+        <div className="flex py-6">
           <div className="w-28 h-28 bg-black rounded-full overflow-hidden grow-0">
             {/*  TODO: PFP  */}
           </div>
@@ -39,15 +45,15 @@ const MyAccount = () => {
           </div>
         </div>
         <div className="font-semibold">{currentUser?.fullName || ""}</div>
-        <div className="max-h-36 overflow-clip w-80 ">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda,
-          at dicta dignissimos distinctio laboriosam molestiae natus perferendis
-          quia quod recusandae?
-        </div>
+        <div className="max-h-36 w-80 break-words">{currentUser.bio}</div>
         <div className="py-4 w-full flex justify-between gap-2 font-normal">
-          <button className="w-full h-8 rounded-lg bg-neutral-300">
-            Edit Profile
-          </button>
+          <Link
+            id="editProfile"
+            to={`/${currentUser.username}/edit`}
+            className="w-full h-8 rounded-lg bg-neutral-300 text-center"
+          >
+            <div className="align-middle my-1">Edit Profile</div>
+          </Link>
           <button className="w-full h-8 rounded-lg bg-neutral-300">
             Share Profile
           </button>

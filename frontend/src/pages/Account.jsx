@@ -23,8 +23,8 @@ const Account = () => {
       .then((response) => {
         setUserData(response.data);
       })
-      .catch((error) => {
-        console.log(error.message);
+      .catch(() => {
+        setUserData(null);
       });
   }, [url]);
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MobileNav from "../components/MobileNav.jsx";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [currentUser, setCurrentUser] = useState("");
@@ -38,6 +38,7 @@ const Login = () => {
         </label>
         <label>
           <input
+            type="password"
             id="password"
             className="bg-neutral-100 p-2 text-sm border rounded-md w-full my-1 border-neutral-300 placeholder-neutral-500"
             placeholder="Password"
@@ -46,6 +47,15 @@ const Login = () => {
         <button className="bg-blue-400 p-1.5 text-sm border rounded-lg w-full my-1 text-md font-bold text-white border-blue-400">
           Log in
         </button>
+        <div className="text-center mt-8 mb-2">
+          <Link to={"/reset"}>Forgotten your password?</Link>
+        </div>
+        <div className="text-center">
+          Don't have an account?
+          <Link className="ml-1 text-blue-500 font-semibold" to={"/register"}>
+            Sign up
+          </Link>
+        </div>
       </form>
 
       <MobileNav></MobileNav>

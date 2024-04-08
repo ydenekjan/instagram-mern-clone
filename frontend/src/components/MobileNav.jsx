@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { GoHome, GoHomeFill, GoPerson, GoPersonFill } from "react-icons/go";
 import {
   IoPlayCircleOutline,

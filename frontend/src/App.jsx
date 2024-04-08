@@ -6,7 +6,8 @@ import Login from "./pages/Login.jsx";
 import Search from "./pages/Search.jsx";
 import Create from "./pages/Create.jsx";
 import Reels from "./pages/Reels.jsx";
-import MyAccount from "./components/MyAccount.jsx";
+import Register from "./pages/Register.jsx";
+import EditAccount from "./components/EditAccount.jsx";
 
 const App = () => {
   return (
@@ -17,6 +18,8 @@ const App = () => {
       <Route path="/search" element={<Search />}></Route>
       <Route path="/create" element={<Create />}></Route>
       <Route path="/reels" element={<Reels />}></Route>
+      <Route path="/register" element={<Register />}></Route>
+      <Route path="/:username/edit" element={<EditAccount />}></Route>
     </Routes>
   );
 };

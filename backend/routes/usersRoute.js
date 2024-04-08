@@ -20,6 +20,7 @@ router.get("/", async (request, response) => {
 router.post("/", async (request, response) => {
   try {
     if (
+      !request.body.emailAddress ||
       !request.body.username ||
       !request.body.fullName ||
       !request.body.password
@@ -28,12 +29,14 @@ router.post("/", async (request, response) => {
     }
 
     const newUser = {
+      emailAddress: request.body.emailAddress,
       username: request.body.username,
       fullName: request.body.fullName,
       password: request.body.password,
-      posts: request.body.posts,
-      followers: request.body.followers,
-      following: request.body.following,
+      posts: [],
+      followers: [],
+      following: [],
+      bio: "",
     };
 
     const user = await User.create(newUser);
@@ -63,32 +66,35 @@ router.get("/:username", async (request, response) => {
   }
 });
 
-//EDIT ACCOUNT
-// router.put('/:username', async (request, response) => {
-//     try {
-//
-//         if (
-//             !request.body.username ||
-//             !request.body.fullName
-//         ) {
-//             return response.status(400).send({message: 'Send all required data'})
-//         }
-//
-//         const { username } = request.params
-//
-//         const result = await User.findOneAndUpdate({ 'username' : username }, request.body)
-//
-//         if (!result) {
-//             return response.status((404)).send({message: "User not found"})
-//         }
-//
-//         return response.status(200).send({message: 'User edited successfully'})
-//
-//     } catch (error) {
-//         console.log(error)
-//         return response.status(500).send({message: error.message})
-//     }
-// })
+// EDIT ACCOUNT
+router.put("/:username/edit", async (request, response) => {
+  try {
+    if (!request.body.username || !request.body.fullName) {
+      return response.status(400).send({ message: "Send all required data" });
+    }
+
+    const { username } = request.params;
+
+    let userData = await User.findOne({ username: username });
+    userData.username = request.body.username;
+    userData.fullName = request.body.fullName;
+    userData.bio = request.body.bio;
+
+    const result = await User.findOneAndUpdate(
+      { username: username },
+      userData,
+    );
+
+    if (!result) {
+      return response.status(404).send({ message: "User not found" });
+    }
+
+    return response.status(200).send({ message: "User edited successfully" });
+  } catch (error) {
+    console.log(error);
+    return response.status(500).send({ message: error.message });
+  }
+});
 
 //DELETE ACCOUNT
 router.delete("/:username", async (request, response) => {
