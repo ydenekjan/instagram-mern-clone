@@ -5,7 +5,6 @@ import axios from "axios";
 
 const EditAccount = () => {
   const [currentUser, setCurrentUser] = useState({ bio: "" });
-  const [image, setImage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,8 +22,9 @@ const EditAccount = () => {
 
     axios
       .put(`http://localhost:5555/users/${currentUser.username}/edit`, data)
-      .then(() => {
-        localStorage.setItem("currentUser", JSON.stringify(data));
+      .then((response) => {
+        setCurrentUser(response.data);
+        localStorage.setItem("currentUser", JSON.stringify(response.data));
         navigate("/" + data.username);
       });
   }

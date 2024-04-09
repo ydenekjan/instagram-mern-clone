@@ -89,7 +89,7 @@ router.put("/:username/edit", async (request, response) => {
       return response.status(404).send({ message: "User not found" });
     }
 
-    return response.status(200).send({ message: "User edited successfully" });
+    return response.status(200).json(userData);
   } catch (error) {
     console.log(error);
     return response.status(500).send({ message: error.message });

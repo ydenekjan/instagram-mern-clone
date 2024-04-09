@@ -8,6 +8,7 @@ import Create from "./pages/Create.jsx";
 import Reels from "./pages/Reels.jsx";
 import Register from "./pages/Register.jsx";
 import EditAccount from "./components/EditAccount.jsx";
+import Images from "./components/Images.jsx";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
       <Route path="/reels" element={<Reels />}></Route>
       <Route path="/register" element={<Register />}></Route>
       <Route path="/:username/edit" element={<EditAccount />}></Route>
+      <Route path="/images" element={<Images />}></Route>
     </Routes>
   );
 };

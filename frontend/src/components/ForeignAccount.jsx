@@ -8,7 +8,6 @@ const ForeignAccount = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   const [currentUser, setCurrentUser] = useState({});
-  const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(0);
   const { username } = useParams();
 
@@ -17,20 +16,16 @@ const ForeignAccount = () => {
 
   useEffect(() => {
     setCurrentUser(JSON.parse(localStorage.getItem("currentUser")) || {});
-  }, [refresh]);
+  }, []);
 
   useEffect(() => {
-    setLoading(true);
-
     axios
       .get(`http://localhost:5555/users/${username}`)
       .then((response) => {
         setUserData(response.data);
-        setLoading(false);
       })
       .catch(() => {
         setUserData(null);
-        setLoading(false);
       });
   }, [url, refresh]);
 
