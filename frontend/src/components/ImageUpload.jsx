@@ -20,7 +20,8 @@ const ImageUpload = () => {
       });
       alert("stonks");
     } catch (err) {
-      alert("not stonks");
+      alert("not stonks: ");
+      console.log(err);
     }
   };
 

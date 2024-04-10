@@ -1,4 +1,4 @@
-import express from "express";
+import express, { request } from "express";
 import { Image } from "../models/imageModel.js";
 import multer from "multer";
 
@@ -20,7 +20,7 @@ router.post("/upload", upload.single("image"), async (req, res) => {
   }
 });
 
-router.get("/images", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const images = await Image.find({});
     const convertedImages = images.map((img) => {
@@ -30,6 +30,20 @@ router.get("/images", async (req, res) => {
       };
     });
     res.json(convertedImages);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const img = await Image.findById(id);
+    const convertedImg = {
+      contentType: img.contentType,
+      data: img.data.toString("base64"),
+    };
+    res.status(201).json(convertedImg);
   } catch (err) {
     res.status(500).send(err.message);
   }

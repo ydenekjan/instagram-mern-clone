@@ -33,6 +33,7 @@ router.post("/", async (request, response) => {
       username: request.body.username,
       fullName: request.body.fullName,
       password: request.body.password,
+      profilePicture: "",
       posts: [],
       followers: [],
       following: [],
@@ -79,6 +80,7 @@ router.put("/:username/edit", async (request, response) => {
     userData.username = request.body.username;
     userData.fullName = request.body.fullName;
     userData.bio = request.body.bio;
+    userData.profilePicture = request.body.profilePicture || "";
 
     const result = await User.findOneAndUpdate(
       { username: username },

@@ -1,9 +1,10 @@
 import express from "express";
-import { dbUrl, PORT } from "./config.js";
 import mongoose from "mongoose";
+import { dbUrl, PORT } from "./config.js";
 import usersRoute from "./routes/usersRoute.js";
-import cors from "cors";
 import imageRoutes from "./routes/imageRoutes.js";
+import pfpRoutes from "./routes/pfpRoutes.js";
+import cors from "cors";
 
 const app = express();
 
@@ -13,6 +14,11 @@ app.use(cors({ origin: true }));
 
 app.use("/users", usersRoute);
 app.use("/images", imageRoutes);
+app.use("/", pfpRoutes);
+
+app.get("/", async (req, res) => {
+  return res.send({ message: "lol" });
+});
 
 mongoose
   .connect(dbUrl)
