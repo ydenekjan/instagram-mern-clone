@@ -1,5 +1,3 @@
-# A MERN stack Instagram clone with tailwind as a side/school project.
-
 ### To start backend server
 1. ```cd backend```  
 
