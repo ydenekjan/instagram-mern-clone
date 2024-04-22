@@ -1,3 +1,5 @@
 /node_modules
 
 /config.envit
+# Local Netlify folder
+.netlify
