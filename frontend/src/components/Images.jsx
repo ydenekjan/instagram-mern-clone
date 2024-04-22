@@ -13,7 +13,7 @@ const Images = () => {
 
   const fetchImages = async () => {
     try {
-      const res = await axios.get("http://localhost:5555/images");
+      const res = await axios.get("https://ig-clone-backend.onrender.com");
       setImages(res.data);
     } catch (err) {
       console.error("Error fetching images: ", err.message);
@@ -22,7 +22,9 @@ const Images = () => {
 
   const fetchSelectedImg = async (id) => {
     try {
-      const res = await axios.get(`http://localhost:5555/images/${id}`);
+      const res = await axios.get(
+        `https://ig-clone-backend.onrender.com/${id}`,
+      );
       setSelectedImg(res.data);
     } catch (err) {
       console.error("Error fetching images: ", err.message);

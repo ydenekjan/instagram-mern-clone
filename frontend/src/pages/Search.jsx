@@ -22,7 +22,7 @@ const Search = () => {
   );
 
   useEffect(() => {
-    axios.get(`http://localhost:5555/users`).then((res) => {
+    axios.get(`https://ig-clone-backend.onrender.com/users`).then((res) => {
       setOriginalUserList(res.data.data);
     });
   }, []);

@@ -21,7 +21,10 @@ const EditAccount = () => {
     };
 
     axios
-      .put(`http://localhost:5555/users/${currentUser.username}/edit`, data)
+      .put(
+        `https://ig-clone-backend.onrender.com/users/${currentUser.username}/edit`,
+        data,
+      )
       .then((response) => {
         setCurrentUser(response.data);
         localStorage.setItem("currentUser", JSON.stringify(response.data));

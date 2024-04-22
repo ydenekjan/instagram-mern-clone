@@ -13,11 +13,15 @@ const ImageUpload = () => {
     formData.append("image", image);
 
     try {
-      await axios.post("http://localhost:5555/images/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      await axios.post(
+        "https://ig-clone-backend.onrender.com/images/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         },
-      });
+      );
       alert("stonks");
     } catch (err) {
       alert("not stonks: ");

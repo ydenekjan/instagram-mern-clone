@@ -77,10 +77,27 @@ router.put("/:username/edit", async (request, response) => {
     const { username } = request.params;
 
     let userData = await User.findOne({ username: username });
+
     userData.username = request.body.username;
     userData.fullName = request.body.fullName;
     userData.bio = request.body.bio;
     userData.profilePicture = request.body.profilePicture || "";
+
+    for (const followedUser of userData.following) {
+      let userObj = {};
+      userObj = await User.findOne({ username: followedUser });
+      const userFollowedIdx = userObj.followers.indexOf(username);
+      userObj.followers.splice(userFollowedIdx, 1, userData.username);
+      await User.findOneAndUpdate({ username: followedUser }, userObj);
+    }
+
+    for (const followingUser of userData.followers) {
+      let userObj = {};
+      userObj = await User.findOne({ username: followingUser });
+      const userFollowingIdx = userObj.followers.indexOf(username);
+      userObj.following.splice(userFollowingIdx, 1, userData.username);
+      await User.findOneAndUpdate({ username: followingUser }, userObj);
+    }
 
     const result = await User.findOneAndUpdate(
       { username: username },

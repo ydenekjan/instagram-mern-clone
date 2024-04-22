@@ -15,7 +15,9 @@ const Login = () => {
 
   const handleSubmit = function (event) {
     axios
-      .get(`http://localhost:5555/users/${event.target.username.value}`)
+      .get(
+        `https://ig-clone-backend.onrender.com/users/${event.target.username.value}`,
+      )
       .then((response) => {
         if (event.target.password.value === response.data.password) {
           setCurrentUser(response.data);

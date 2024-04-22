@@ -19,7 +19,7 @@ const Account = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5555/users/${username}`)
+      .get(`https://ig-clone-backend.onrender.com/users/${username}`)
       .then((response) => {
         setUserData(response.data);
       })

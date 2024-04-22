@@ -20,7 +20,7 @@ const ForeignAccount = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5555/users/${username}`)
+      .get(`https://ig-clone-backend.onrender.com/users/${username}`)
       .then((response) => {
         setUserData(response.data);
       })
@@ -31,7 +31,10 @@ const ForeignAccount = () => {
 
   function axiosFollowCall(data) {
     axios
-      .put(`http://localhost:5555/users/follow/${username}`, data)
+      .put(
+        `https://ig-clone-backend.onrender.com/users/follow/${username}`,
+        data,
+      )
       .then(() => {
         setRefresh(refresh + 1);
         localStorage.setItem("currentUser", JSON.stringify(data._currentUser));

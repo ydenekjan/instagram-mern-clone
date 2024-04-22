@@ -20,32 +20,34 @@ const Register = () => {
       bio: "",
     };
 
-    axios.get("http://localhost:5555/users").then((response) => {
-      let accountExists = false;
+    axios
+      .get("https://ig-clone-backend.onrender.com/users")
+      .then((response) => {
+        let accountExists = false;
 
-      response.data.data.forEach((user) => {
-        if (
-          user.username === data.username ||
-          user.emailAddress === data.emailAddress
-        ) {
-          return (accountExists = true);
+        response.data.data.forEach((user) => {
+          if (
+            user.username === data.username ||
+            user.emailAddress === data.emailAddress
+          ) {
+            return (accountExists = true);
+          }
+        });
+
+        if (!accountExists) {
+          axios
+            .post("https://ig-clone-backend.onrender.com/users", data)
+            .then(() => {
+              localStorage.setItem("currentUser", JSON.stringify(data));
+              window.location.pathname = "/" + data.username;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          alert("user with this username or email address already exists!");
         }
       });
-
-      if (!accountExists) {
-        axios
-          .post("http://localhost:5555/users", data)
-          .then(() => {
-            localStorage.setItem("currentUser", JSON.stringify(data));
-            window.location.pathname = "/" + data.username;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        alert("user with this username or email address already exists!");
-      }
-    });
   }
 
   const inputRegex = {
