@@ -1,8 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import usersRoute from "./routes/usersRoute.js";
+import postRoutes from "./routes/postRoutes.js";
 import cors from "cors";
-import imageRoutes from "./routes/imageRoutes.js";
 const app = express();
 import dotEnv from "dotenv";
 dotEnv.config();
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors({ origin: true }));
 
 app.use("/users", usersRoute);
-app.use("/images", imageRoutes);
+app.use("/posts", postRoutes);
 
 mongoose
   .connect(DATABASE)

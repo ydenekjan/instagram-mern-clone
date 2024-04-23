@@ -1,14 +1,15 @@
-import React, {useEffect, useState} from 'react'
-import axios from 'axios';
-import MobileNav from '../components/MobileNav.jsx';
+import React from "react";
+import MobileNav from "../components/MobileNav.jsx";
+import { Post } from "../components/Post.jsx";
 
 const Home = () => {
+  return (
+    <div>
+      Home
+      <MobileNav></MobileNav>
+      <Post postId={"66280eb772e949bb06e1cb0b"} />
+    </div>
+  );
+};
 
-    return (
-        <div>Home
-        <MobileNav></MobileNav>
-        </div>
-    )
-}
-
-export default Home
+export default Home;
