@@ -34,7 +34,7 @@ const Create = () => {
 
     try {
       axios
-        .post("http://localhost:5555/posts/create", formData, {
+        .post("https://ig-clone-backend.onrender.com/posts/create", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
