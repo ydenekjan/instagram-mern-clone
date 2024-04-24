@@ -16,21 +16,14 @@ router.get("/followed/:username", async (req, res) => {
     const posts = await Post.find();
     let filteredPosts = [];
 
-    if (currentUser.following.length > 0) {
-      posts.map((post) => {
-        let removedPosts = [];
-
-        if (currentUser.following.some((user) => user === post.author)) {
-          filteredPosts.push(post);
-        } else {
-          removedPosts.push(post);
-        }
-
-        if (filteredPosts.length < 5)
-          filteredPosts.push(...removedPosts.slice(0, 5));
+    if (currentUser) {
+      currentUser.following.map((user) => {
+        filteredPosts = posts.filter((post) => post.author === user);
       });
+
+      if (filteredPosts.length === 0) filteredPosts.push(...posts);
     } else {
-      filteredPosts = posts;
+      filteredPosts.push(...posts);
     }
 
     const convertedPosts = filteredPosts.map((post) => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import MobileNav from "../components/MobileNav.jsx";
 import Posts from "../components/Posts.jsx";
 
