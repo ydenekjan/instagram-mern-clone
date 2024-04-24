@@ -8,5 +8,17 @@ export default {
     require("tailwindcss/plugin")(({ addVariant }) => {
       addVariant("search-cancel", "&::-webkit-search-cancel-button");
     }),
+    function ({ addUtilities }) {
+      const newUtilities = {
+        ".no-scrollbar::-webkit-scrollbar": {
+          display: "none",
+        },
+        ".no-scrollbar": {
+          "-ms-overflow-style": "none",
+          "scrollbar-width": "none",
+        },
+      };
+      addUtilities(newUtilities);
+    },
   ],
 };

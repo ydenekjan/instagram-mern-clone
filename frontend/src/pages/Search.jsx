@@ -50,23 +50,25 @@ const Search = () => {
   };
 
   return (
-    <div className="p-6">
-      <div className="text-lg mb-6 flex gap-6">
-        <input
-          type="input"
-          id="searchbar"
-          onInput={handleInput}
-          placeholder="Search"
-          className="bg-neutral-200 rounded-md w-full p-1 indent-1"
-        />
-        <button onClick={handleCancel}>Cancel</button>
-      </div>
+    <>
+      <section className="flex flex-col mt-2 mx-2">
+        <div className="text-lg pb-3 mb-3 flex gap-6 border-b">
+          <input
+            type="input"
+            id="searchbar"
+            onInput={handleInput}
+            placeholder="Search"
+            className="bg-neutral-200 rounded-md w-full p-1 indent-1"
+          />
+          <button onClick={handleCancel}>Cancel</button>
+        </div>
 
-      <div className="text-lg flex flex-col gap-6 relative">
-        {userList.map(userMap)}
-      </div>
+        <div className=" mx-2 text-lg flex flex-col gap-6 relative overflow-y-scroll">
+          {userList.map(userMap)}
+        </div>
+      </section>
       <MobileNav></MobileNav>
-    </div>
+    </>
   );
 };
 

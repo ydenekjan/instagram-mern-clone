@@ -7,66 +7,58 @@ const upload = multer({ storage: storage });
 
 const router = express.Router();
 
-//RETURN ALL POSTS OF FOLLOWED ACCOUNTS
-router.get("/", async (req, res) => {
+//RETURN ALL POSTS OF FOLLOWED ACCOUNTS / ALL POSTS IF NOT LOGGED IN
+router.get("/followed/:username", async (req, res) => {
   try {
+    const { username } = req.params;
+    const currentUser = await User.findOne({ username: username });
+
     const posts = await Post.find();
+    let filteredPosts = [];
 
-    let convertedPosts = [];
+    if (currentUser.following.length > 0) {
+      posts.map((post) => {
+        let removedPosts = [];
 
-    posts.map((post) => {
-      console.log(posts);
-      const img = {
+        if (currentUser.following.some((user) => user === post.author)) {
+          filteredPosts.push(post);
+        } else {
+          removedPosts.push(post);
+        }
+
+        if (filteredPosts.length < 5)
+          filteredPosts.push(...removedPosts.slice(0, 5));
+      });
+    } else {
+      filteredPosts = posts;
+    }
+
+    const convertedPosts = filteredPosts.map((post) => {
+      let img = post.image;
+
+      //?????????????
+      //don't touch this EVER, you will never ever figure it out again
+      let newPost = { ...post._doc };
+
+      img = {
+        ...img,
         contentType: post.image.contentType,
         data: post.image.data.toString("base64"),
       };
 
-      convertedPosts.push({
-        title: post.title,
-        author: post.author,
+      newPost = {
+        ...newPost,
         image: img,
-        description: post.description,
-        likes: post.likes,
-        comments: post.comments,
-      });
+      };
+
+      return newPost;
     });
 
-    if (!posts) {
+    if (!convertedPosts) {
       return res.status(404).send({ message: "No posts found" });
     }
 
     return res.status(200).json(convertedPosts);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
-
-//RETURN A SPECIFIC POST
-router.get("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const post = await Post.findById(id);
-    const img = {
-      contentType: post.image.contentType,
-      data: post.image.data.toString("base64"),
-    };
-
-    const convertedPost = {
-      title: post.title,
-      author: post.author,
-      image: img,
-      description: post.description,
-      likes: post.likes,
-      comments: post.comments,
-    };
-
-    return res.status(200).json(convertedPost);
-
-    if (!post) {
-      return res.status(404).send({ message: "Post not found" });
-    }
-
-    return res.status(200).json(post);
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -92,7 +84,6 @@ router.get("/user/:username", async (req, res) => {
 router.post("/create", upload.single("image"), async (request, response) => {
   try {
     const newPost = {
-      title: request.body.title,
       author: request.body.author,
       image: {
         data: request.file.buffer,

@@ -29,7 +29,7 @@ const Account = () => {
   }, [url]);
 
   return (
-    <div>
+    <div className="h-full overflow-y-clip">
       {currentUser?.username !== userData?.username ? (
         <ForeignAccount />
       ) : (

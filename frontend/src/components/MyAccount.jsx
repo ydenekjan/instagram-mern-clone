@@ -16,7 +16,7 @@ const MyAccount = () => {
   }, []);
 
   return (
-    <div className="p-4">
+    <div className="p-4 h-full">
       <div className="font-light">
         {/*HEADER*/}
         <div className="w-full h-auto flex justify-between align-middle">
@@ -59,7 +59,6 @@ const MyAccount = () => {
           </button>
         </div>
       </div>
-      <MobileNav></MobileNav>
     </div>
   );
 };

@@ -72,70 +72,67 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <div className="flex content-center flex-col flex-wrap">
-        <div className="mt-20 mb-14 mx-auto text-4xl font-serif">Clonegram</div>
-        <form id={"registerForm"} className="w-80" onSubmit={handleRegister}>
-          <label>
-            <input
-              onKeyDown={(e) => inputCheck(e, inputRegex.emailRegex)}
-              type="email"
-              id="emailAddress"
-              className="bg-neutral-100 p-2 text-sm border rounded-md w-full my-1 border-neutral-300 placeholder-neutral-500"
-              placeholder="Email Address"
-              required={true}
-            />
-          </label>
-          <label>
-            <input
-              id="fullName"
-              className="bg-neutral-100 p-2 text-sm border rounded-md w-full my-1 border-neutral-300 placeholder-neutral-500"
-              placeholder="Full Name"
-              required={true}
-              max={24}
-            />
-          </label>
-          <label>
-            <input
-              onKeyDown={(e) => inputCheck(e, inputRegex.emailRegex)}
-              id="username"
-              className="bg-neutral-100 p-2 text-sm border rounded-md w-full my-1 border-neutral-300 placeholder-neutral-500"
-              placeholder="Username"
-              max={12}
-              required={true}
-            />
-          </label>
-          <label className="relative">
-            <input
-              onKeyDown={(e) => inputCheck(e, inputRegex.emailRegex)}
-              type={passwordState}
-              ref={passwordInput}
-              id="password"
-              className="bg-neutral-100 p-2 text-sm border rounded-md w-full my-1 border-neutral-300 placeholder-neutral-500"
-              placeholder="Password"
-              max={16}
-              required={true}
-            ></input>
-            <button
-              type={"button"}
-              onClick={() => {
-                passwordState === "password"
-                  ? setPasswordState("text")
-                  : setPasswordState("password");
-                setTimeout(() => passwordInput.current.focus(), 0);
-              }}
-              className="absolute right-3 top-px text-sm font-bold text-neutral-600"
-            >
-              SHOW
-            </button>
-          </label>
-          <button className="bg-blue-400 p-1.5 text-sm border rounded-lg w-full my-8 font-bold text-white border-blue-400">
-            Register
+    <div className="flex content-center flex-col flex-wrap">
+      <div className="mt-12 mb-14 mx-auto text-4xl font-serif">Clonegram</div>
+      <form id={"registerForm"} className="w-80" onSubmit={handleRegister}>
+        <label>
+          <input
+            onKeyDown={(e) => inputCheck(e, inputRegex.emailRegex)}
+            type="email"
+            id="emailAddress"
+            className="bg-neutral-100 p-2 text-sm border rounded-md w-full my-1 border-neutral-300 placeholder-neutral-500"
+            placeholder="Email Address"
+            required={true}
+          />
+        </label>
+        <label>
+          <input
+            id="fullName"
+            className="bg-neutral-100 p-2 text-sm border rounded-md w-full my-1 border-neutral-300 placeholder-neutral-500"
+            placeholder="Full Name"
+            required={true}
+            max={24}
+          />
+        </label>
+        <label>
+          <input
+            onKeyDown={(e) => inputCheck(e, inputRegex.emailRegex)}
+            id="username"
+            className="bg-neutral-100 p-2 text-sm border rounded-md w-full my-1 border-neutral-300 placeholder-neutral-500"
+            placeholder="Username"
+            max={12}
+            required={true}
+          />
+        </label>
+        <label className="relative">
+          <input
+            onKeyDown={(e) => inputCheck(e, inputRegex.emailRegex)}
+            type={passwordState}
+            ref={passwordInput}
+            id="password"
+            className="bg-neutral-100 p-2 text-sm border rounded-md w-full my-1 border-neutral-300 placeholder-neutral-500"
+            placeholder="Password"
+            max={16}
+            required={true}
+          ></input>
+          <button
+            type={"button"}
+            onClick={() => {
+              passwordState === "password"
+                ? setPasswordState("text")
+                : setPasswordState("password");
+              setTimeout(() => passwordInput.current.focus(), 0);
+            }}
+            className="absolute right-3 top-px text-sm font-bold text-neutral-600"
+          >
+            SHOW
           </button>
-        </form>
-
-        <MobileNav></MobileNav>
-      </div>
+        </label>
+        <button className="bg-blue-400 p-1.5 text-sm border rounded-lg w-full my-8 font-bold text-white border-blue-400">
+          Register
+        </button>
+      </form>
+      <MobileNav />
     </div>
   );
 };

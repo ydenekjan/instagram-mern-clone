@@ -28,7 +28,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex content-center flex-col flex-wrap">
+    <div className="flex flex-col items-center overflow-y-auto h-svh">
       <div className="mt-20 mb-14 mx-auto text-4xl font-serif">Clonegram</div>
       <form className="w-80" onSubmit={handleSubmit}>
         <label>

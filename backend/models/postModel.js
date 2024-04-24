@@ -2,13 +2,9 @@ import mongoose, { Schema } from "mongoose";
 
 const postSchema = new Schema(
   {
-    title: {
-      type: String,
-      required: false,
-    },
     author: {
       type: String,
-      required: false,
+      required: true,
     },
     image: {
       contentType: String,
@@ -28,7 +24,7 @@ const postSchema = new Schema(
     },
   },
   {
-    timestamps: false,
+    timestamps: true,
   },
 );
 

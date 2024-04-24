@@ -18,8 +18,8 @@ const MobileNav = () => {
   const url = location.pathname;
 
   return (
-    <div className="w-full h-auto fixed bottom-0 left-0 px-8 py-4 bg-white">
-      <ul className="flex flex-row justify-between">
+    <div className="max-w-md left-0 right-0 h-12 fixed bottom-0 bg-white z-10 border-t px-4 flex items-center mx-auto">
+      <ul className="w-full flex flex-row justify-between">
         <Link id="home" to="/">
           {url === "/" || "" ? <GoHomeFill size={28} /> : <GoHome size={28} />}
         </Link>

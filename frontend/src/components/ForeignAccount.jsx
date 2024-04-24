@@ -84,7 +84,7 @@ const ForeignAccount = () => {
     !userData ? (
       <div>User not found</div>
     ) : (
-      <div className="p-4">
+      <div className="p-4 h-full">
         <div className="font-light">
           <div className="w-full h-auto flex justify-between align-middle">
             <IoIosArrowBack size={26} onClick={() => navigate(-1)} />
@@ -140,8 +140,6 @@ const ForeignAccount = () => {
             </button>
           </div>
         </div>
-
-        <MobileNav></MobileNav>
       </div>
     )
   );
