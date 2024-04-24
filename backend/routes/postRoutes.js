@@ -1,10 +1,45 @@
 import express from "express";
 import { Post } from "../models/postModel.js";
 import multer from "multer";
+import { User } from "../models/userModel.js";
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 const router = express.Router();
+
+//RETURN ALL POSTS OF FOLLOWED ACCOUNTS
+router.get("/", async (req, res) => {
+  try {
+    const posts = await Post.find();
+
+    let convertedPosts = [];
+
+    posts.map((post) => {
+      console.log(posts);
+      const img = {
+        contentType: post.image.contentType,
+        data: post.image.data.toString("base64"),
+      };
+
+      convertedPosts.push({
+        title: post.title,
+        author: post.author,
+        image: img,
+        description: post.description,
+        likes: post.likes,
+        comments: post.comments,
+      });
+    });
+
+    if (!posts) {
+      return res.status(404).send({ message: "No posts found" });
+    }
+
+    return res.status(200).json(convertedPosts);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
 
 //RETURN A SPECIFIC POST
 router.get("/:id", async (req, res) => {
@@ -70,7 +105,11 @@ router.post("/create", upload.single("image"), async (request, response) => {
 
     const post = await Post.create(newPost);
 
-    return response.status(201).send(post);
+    let user = await User.findOne({ username: request.body.author });
+    user.posts.push(post._id);
+    await User.findOneAndUpdate({ username: user.username }, user);
+
+    return response.status(201).send("Post created successfully");
   } catch (error) {
     console.log(error.message);
     response.status(500).send({ message: error.message });

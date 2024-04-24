@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MobileNav from "../components/MobileNav.jsx";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const author = JSON.parse(localStorage.getItem("currentUser")).username;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!author) {
+      alert("Please log in first.");
+      navigate("/login");
+    }
+  }, []);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
-    console.log(author);
   };
 
   const handleDescriptionChange = (e) => {
@@ -30,8 +38,6 @@ const Create = () => {
     formData.append("author", author);
     formData.append("image", image);
 
-    console.log(formData);
-
     try {
       axios
         .post("https://ig-clone-backend.onrender.com/posts/create", formData, {
@@ -39,9 +45,8 @@ const Create = () => {
             "Content-Type": "multipart/form-data",
           },
         })
-        .then((res) => {
-          console.log(res.data);
-          alert("stonks");
+        .then(() => {
+          navigate(`/`);
         });
     } catch (err) {
       alert("not stonks: ");
@@ -70,27 +75,36 @@ const Create = () => {
               id="desc"
               onChange={handleDescriptionChange}
               className="bg-neutral-100 p-2 text-sm border rounded-md w-full my-1 border-neutral-300 placeholder-neutral-500"
-              placeholder="Title"
+              placeholder="Description"
               required={true}
             />
           </label>
-          <label>
+          <div className="w-full aspect-square rounded-2xl mt-6 mb-3 overflow-hidden">
+            {image ? (
+              <img src={URL.createObjectURL(image)} alt="post image" />
+            ) : (
+              <div className="w-full h-full bg-neutral-300"></div>
+            )}
+          </div>
+          <label
+            className={
+              "bg-neutral-100 p-2 text-sm border rounded-md border-neutral-300 text-neutral-500 flex justify-center"
+            }
+          >
+            Choose Photo
             <input
               id="image"
               type={"file"}
               name="image"
               onChange={handleImageChange}
-              className="bg-neutral-100 p-2 text-sm border rounded-md w-full my-1 border-neutral-300 placeholder-neutral-500"
-              placeholder="Title"
               required={true}
+              className={"hidden"}
             />
           </label>
           <button className="bg-blue-400 p-1.5 text-sm border rounded-lg w-full my-8 font-bold text-white border-blue-400">
             Post
           </button>
         </form>
-
-        <MobileNav></MobileNav>
       </div>
       <MobileNav></MobileNav>
     </div>

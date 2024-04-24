@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MobileNav from "../components/MobileNav.jsx";
 import { Post } from "../components/Post.jsx";
+import { fetchPosts } from "../hooks/fetchPosts.js";
 
 const Home = () => {
+  const [postsData, setPostsData] = useState([]);
+
+  useEffect(() => {
+    fetchPosts().then((res) => {
+      setPostsData(res.data);
+    });
+  }, []);
+
   return (
-    <div>
+    <div className="">
       Home
       <MobileNav></MobileNav>
-      <Post postId={"66280eb772e949bb06e1cb0b"} />
+      {postsData.map((post) => {
+        return <Post key={post._id} />;
+      })}
     </div>
   );
 };
