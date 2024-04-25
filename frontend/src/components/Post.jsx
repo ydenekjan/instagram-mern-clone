@@ -27,11 +27,13 @@ export const Post = (props) => {
       </div>
 
       {postData.image ? (
-        <img
-          src={`data:${postData.image.contentType};base64,${postData.image.data}`}
-          alt="post image"
-          className="w-full"
-        />
+        <div className="max-h-128 overflow-hidden flex items-center">
+          <img
+            src={`data:${postData.image.contentType};base64,${postData.image.data}`}
+            alt="post image"
+            className="w-full"
+          />
+        </div>
       ) : (
         <div>NO IMAGE</div>
       )}
