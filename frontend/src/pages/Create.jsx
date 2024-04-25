@@ -53,7 +53,7 @@ const Create = () => {
   };
 
   return (
-    <div className="flex content-center flex-col flex-wrap p-8">
+    <div className="flex content-center flex-col flex-wrap p-12 pb-24">
       <div className="mt-4 mb-16 mx-auto text-4xl font-serif">
         Create a Post
       </div>
@@ -67,15 +67,17 @@ const Create = () => {
             required={true}
           />
         </label>
-        <div className="w-full aspect-square rounded-2xl mt-6 mb-3 overflow-hidden border">
+        <div className="w-full max-h-128  mt-6 mb-3 overflow-hidden">
           {image ? (
-            <img
-              className="w-full aspect-square "
-              src={URL.createObjectURL(image)}
-              alt="post image"
-            />
+            <div className="w-full max-h-128 overflow-hidden flex items-center">
+              <img
+                className="w-full"
+                src={URL.createObjectURL(image)}
+                alt="post image"
+              />
+            </div>
           ) : (
-            <div className="w-full h-full bg-neutral-300"></div>
+            <div className="w-full aspect-square bg-neutral-300 rounded-2xl"></div>
           )}
         </div>
         <label
