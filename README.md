@@ -1,10 +1,3 @@
-### To start backend server
-1. ```cd backend```  
+A MERN Stack application as a CV/School project.  
 
-2. ```npm run dev``` or ```npm start```
-<br>
-
-### To start frontend client
-1. ```cd frontend```  
-
-2. ```npm run dev``` or ```npm start```
+[Visit](https://ydenekjan-ig.netlify.app/) to try it out
