@@ -13,7 +13,9 @@ const Posts = () => {
   }, []);
 
   return (
-    <div className="flex flex-col overflow-y-scroll pb-12">{postsData}</div>
+    <div className="flex flex-col-reverse overflow-y-scroll pb-12">
+      {postsData}
+    </div>
   );
 };
 
